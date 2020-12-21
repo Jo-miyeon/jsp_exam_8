@@ -22,12 +22,18 @@ public class Controller extends HttpServlet {
 		ArrayList<Article> articles = dao.getArticles(); 
 		
 		String action = request.getParameter("action");
-		request.setAttribute("mydata",articles);
+		
 		String dest="";
-		if(action.equals("list")) {
+		if(action.equals("insert")) {
+			String title = request.getParameter("title");
+			String body = request.getParameter("body");
+			int mid = Integer.parseInt(request.getParameter("mid"));
+			dao.insertArticle(title, body, mid);
+			dest = "/DBTest.jsp";
+		}else if(action.equals("list")) {
+			request.setAttribute("mydata",articles);
+		}else{
 			dest = "/list.jsp";
-		}else {
-			dest = "/list2.jsp";
 		}
 		//jsp에 articles넘기기 1.request객체에 데이터 저장
 		request.setAttribute("myData",articles);
